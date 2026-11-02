@@ -98,13 +98,17 @@ class RuleBasedAI:
             f"Score: {score}\n"
         )
 
+# Creating an AI instance
 ai = RuleBasedAI()
 
+# CREATING A PERCENTAGE COMPARISON FOR TRAINING DATA    
+# Variables used for comparison
 comparison = {
     "same": 0,
     "total": 0
 }
 
+# A for loop used to check each row
 for _, row in training_data.iterrows():
     person = {
         "housing": row["Housing"],
@@ -115,14 +119,18 @@ for _, row in training_data.iterrows():
         "purpose": row["Purpose"]
     }
 
+    # Calculate the score for the person
     score = ai.calculate_score(person)
 
+    # Checks threshold and assigns a risk value
     predicted = "bad" if score >= ai.threshold else "good"
     actual = str(row["Risk"]).strip().lower()
 
+    # adds up the total and same values for comparison + actual risk values
     if actual in ["good", "bad"]:
         comparison["total"] += 1
         if predicted == actual:
             comparison["same"] += 1
 
+# Print the comparison results (percentage)
 print(f"Same risk: {comparison['same'] / comparison['total'] * 100:.2f}%")
