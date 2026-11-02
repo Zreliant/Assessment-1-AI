@@ -97,3 +97,32 @@ class RuleBasedAI:
             f"Risk Assessment: {risk}\n"
             f"Score: {score}\n"
         )
+
+ai = RuleBasedAI()
+
+comparison = {
+    "same": 0,
+    "total": 0
+}
+
+for _, row in training_data.iterrows():
+    person = {
+        "housing": row["Housing"],
+        "savings": row["Saving accounts"],
+        "checking": row["Checking account"],
+        "duration": row["Duration"],
+        "credit_amount": row["Credit amount"],
+        "purpose": row["Purpose"]
+    }
+
+    score = ai.calculate_score(person)
+
+    predicted = "bad" if score >= ai.threshold else "good"
+    actual = str(row["Risk"]).strip().lower()
+
+    if actual in ["good", "bad"]:
+        comparison["total"] += 1
+        if predicted == actual:
+            comparison["same"] += 1
+
+print(f"Same risk: {comparison['same'] / comparison['total'] * 100:.2f}%")
