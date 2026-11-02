@@ -1,5 +1,6 @@
 import pandas as pd
 
+# Importing the data sets
 training_data = pd.read_csv('training_data.csv')
 test_data = pd.read_csv('test_data.csv')
 
@@ -101,6 +102,7 @@ class RuleBasedAI:
 # Creating an AI instance
 ai = RuleBasedAI()
 
+
 # CREATING A PERCENTAGE COMPARISON FOR TRAINING DATA    
 # Variables used for comparison
 comparison = {
@@ -134,6 +136,7 @@ for _, row in training_data.iterrows():
 
 # Print the comparison results (percentage)
 print(f"Same risk: {comparison['same'] / comparison['total'] * 100:.2f}%")
+
 
 # CREATING A TABLE FOR TEST DATA
 # Predict the credit risk for every row
