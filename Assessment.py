@@ -43,3 +43,34 @@ class RuleBasedAI:
                 "repairs": 1,
             }
         }
+
+    def calculate_score(self, person_Data):
+        score = 0
+
+        housing = str(person_Data.get("housing", "")).strip().lower()
+        points = self.rules["housing"].get(housing, 0)
+        score = score + points
+
+        savings = str(person_Data.get("savings", "")).strip().lower()
+        points = self.rules["savings"].get(savings, 0)
+        score = score + points
+
+        checking = str(person_Data.get("checking", "")).strip().lower()
+        points = self.rules["checking"].get(checking, 0)
+        score = score + points
+
+        duration = float(person_Data.get("duration", 0))
+        if duration > 24:
+            points = self.rules["duration"]["over_24_months"]
+            score = score + points
+
+        credit = float(person_Data.get("credit_amount", 0))
+        if credit > 4000:
+            points = self.rules["credit_amount"]["over_4000"]
+            score = score + points
+
+        purpose = str(person_Data.get("purpose", "")).strip().lower()
+        points = self.rules["purpose"].get(purpose, 0)
+        score = score + points
+
+        return score
