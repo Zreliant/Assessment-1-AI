@@ -135,9 +135,12 @@ for _, row in training_data.iterrows():
 # Print the comparison results (percentage)
 print(f"Same risk: {comparison['same'] / comparison['total'] * 100:.2f}%")
 
+# CREATING A TABLE FOR TEST DATA
+# Predict the credit risk for every row
 predicted_risks = []
 scores = []
 
+# A for loop used to check each row
 for _, row in test_data.iterrows():
     person = {
         "housing": row["Housing"],
@@ -148,14 +151,19 @@ for _, row in test_data.iterrows():
         "purpose": row["Purpose"]
     }
 
+    # Calculate the score for the person
     score = ai.calculate_score(person)
 
+    # Checks threshold and assigns a risk value
     risk = "bad" if score >= ai.threshold else "good"
 
+    # Gets the risk
     predicted_risks.append(risk)
 
+# Add the results to the dataset
 test_data["Risk"] = predicted_risks
 
+# Save to a new CSV file
 test_data.to_csv("test_data_predictions.csv", index=False)
 
 print("Credit risk predictions saved to test_data_predictions.csv")
