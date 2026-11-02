@@ -82,3 +82,18 @@ class RuleBasedAI:
         score = score + points
 
         return score
+
+    # RESPONSE ON RISK ASSESSMENT
+    # Adds up the score and returns a risk assessment
+    def respond(self, person_Data):
+        score = self.calculate_score(person_Data)
+
+        if score >= self.threshold:
+            risk = "High Risk"
+        else:
+            risk = "Low Risk"
+
+        return (
+            f"Risk Assessment: {risk}\n"
+            f"Score: {score}\n"
+        )
