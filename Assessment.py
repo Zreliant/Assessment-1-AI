@@ -5,7 +5,10 @@ test_data = pd.read_csv('test_data.csv')
 
 class RuleBasedAI:
     def __init__(self):
+        # THE POINT SCORING SYSTEM
+        # Amount needed for bad credit score
         self.threshold = 7
+        # Points added depending on data
         self.rules = {
             "housing": {
                 "rent": 2,
