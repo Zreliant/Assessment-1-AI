@@ -134,3 +134,28 @@ for _, row in training_data.iterrows():
 
 # Print the comparison results (percentage)
 print(f"Same risk: {comparison['same'] / comparison['total'] * 100:.2f}%")
+
+predicted_risks = []
+scores = []
+
+for _, row in test_data.iterrows():
+    person = {
+        "housing": row["Housing"],
+        "savings": row["Saving accounts"],
+        "checking": row["Checking account"],
+        "duration": row["Duration"],
+        "credit_amount": row["Credit amount"],
+        "purpose": row["Purpose"]
+    }
+
+    score = ai.calculate_score(person)
+
+    risk = "bad" if score >= ai.threshold else "good"
+
+    predicted_risks.append(risk)
+
+test_data["Risk"] = predicted_risks
+
+test_data.to_csv("test_data_predictions.csv", index=False)
+
+print("Credit risk predictions saved to test_data_predictions.csv")
