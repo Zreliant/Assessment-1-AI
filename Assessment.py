@@ -44,31 +44,39 @@ class RuleBasedAI:
             }
         }
 
+    # RISKS TO POINTS
+    # Calculates risk score depending on data
     def calculate_score(self, person_Data):
         score = 0
 
+        # Calculates house into score
         housing = str(person_Data.get("housing", "")).strip().lower()
         points = self.rules["housing"].get(housing, 0)
         score = score + points
 
+        # Calculates savings into score
         savings = str(person_Data.get("savings", "")).strip().lower()
         points = self.rules["savings"].get(savings, 0)
         score = score + points
 
+        # Calculates checking into score
         checking = str(person_Data.get("checking", "")).strip().lower()
         points = self.rules["checking"].get(checking, 0)
         score = score + points
 
+        # Calculates loan duration into score 
         duration = float(person_Data.get("duration", 0))
         if duration > 24:
             points = self.rules["duration"]["over_24_months"]
             score = score + points
 
+        # Calculates credit amount into score
         credit = float(person_Data.get("credit_amount", 0))
         if credit > 4000:
             points = self.rules["credit_amount"]["over_4000"]
             score = score + points
 
+        # Calculates loan purpose into score
         purpose = str(person_Data.get("purpose", "")).strip().lower()
         points = self.rules["purpose"].get(purpose, 0)
         score = score + points
